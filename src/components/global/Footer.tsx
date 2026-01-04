@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="flex flex-col gap-6 max-w-[250px]">
             <div className="flex items-center gap-3">
               <Image
-                src={"/logo/logo-no-bg.png"}
+                src={"/logo/logo-no-bg.svg"}
                 alt="KKOSM Logo"
                 width={55}
                 height={55}
