@@ -100,23 +100,29 @@ const Footer = () => {
               <YoutubeIcon />
             </Link>
             <Link
-              href="#"
+              href="https://www.instagram.com/scoutskkosm/"
               className="text-[#FEF4E9] hover:text-white transition-colors"
               aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <InstagramIcon />
             </Link>
             <Link
-              href="#"
+              href="https://www.facebook.com/kkosml"
               className="text-[#FEF4E9] hover:text-white transition-colors"
               aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FacebookIcon />
             </Link>
             <Link
-              href="#"
+              href="https://www.tiktok.com/@scoutsofrustavi?lang=en"
               className="text-[#FEF4E9] hover:text-white transition-colors"
               aria-label="TikTok"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <TikTokIcon />
             </Link>
