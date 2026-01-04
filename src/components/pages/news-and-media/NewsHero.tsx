@@ -119,14 +119,14 @@ const NewsHero = () => {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
-        className="absolute bottom-0 right-0 z-0 w-[80%] md:w-[60%] lg:w-auto"
+        className="absolute bottom-0 right-0 z-0 w-[400px] md:w-[600px] lg:w-[800px]"
       >
         <Image
           src="/images/news&media/hero/hero.webp"
           alt=""
           role="presentation"
-          height={500}
-          width={800}
+          height={1000}
+          width={1600}
           className="w-full h-auto object-cover"
         />
       </motion.div>
