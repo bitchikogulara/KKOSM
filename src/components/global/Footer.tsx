@@ -53,16 +53,16 @@ const Footer = () => {
                 Programs
               </h4>
               <div className="flex flex-col gap-3 text-sm lg:text-base text-[#FEF4E9]">
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/#leadership-training" className="hover:text-white transition-colors">
                   Leadership Training
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/#outdoor-adventures" className="hover:text-white transition-colors">
                   Outdoor Adventures
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/#community-service" className="hover:text-white transition-colors">
                   Community Service
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/#youth-development" className="hover:text-white transition-colors">
                   Youth Development
                 </Link>
               </div>
@@ -71,19 +71,19 @@ const Footer = () => {
             {/* Column 4: More Links */}
             <div className="flex flex-col gap-6">
               <h4 className="text-sm lg:text-base font-medium text-yellow-lighter">
-                Programs
+                Quick Links
               </h4>
               <div className="flex flex-col gap-3 text-sm lg:text-base text-[#FEF4E9]">
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/about-us" className="hover:text-white transition-colors">
                   About Us
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/news-and-media" className="hover:text-white transition-colors">
                   News & Media
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/events" className="hover:text-white transition-colors">
                   Events
                 </Link>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link href="/registration" className="hover:text-white transition-colors">
                   Registration
                 </Link>
               </div>
@@ -93,9 +93,11 @@ const Footer = () => {
           {/* Column 5: Social Icons */}
           <div className="flex items-start gap-4">
             <Link
-              href="#"
+              href="https://www.youtube.com/@scoutskkosm"
               className="text-[#FEF4E9] hover:text-white transition-colors"
               aria-label="YouTube"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <YoutubeIcon />
             </Link>
