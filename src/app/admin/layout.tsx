@@ -43,7 +43,7 @@ export default function AdminLayout({
                     </button>
                 </div>
 
-                <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+                <nav className="flex-1 flex flex-col p-3 space-y-1 overflow-y-auto">
                     <NavLink
                         href="/admin"
                         active={pathname === "/admin"}
@@ -95,7 +95,7 @@ export default function AdminLayout({
 
                     <button
                         onClick={handleLogout}
-                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-red-50 text-red-600 hover:bg-red-100 w-full text-left mt-4 border border-red-200 ${collapsed ? "justify-center" : ""}`}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-red-50 text-red-600 hover:bg-red-100 w-full text-left mt-auto border border-red-200 ${collapsed ? "justify-center" : ""}`}
                         title={collapsed ? "Logout" : ""}
                     >
                         <span className="shrink-0">
