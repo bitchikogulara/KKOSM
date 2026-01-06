@@ -17,9 +17,24 @@ export function middleware(request: NextRequest) {
         if (!adminSession) {
             return NextResponse.redirect(new URL("/admin/login", request.url));
         }
+
+        try {
+            const sessionData = JSON.parse(adminSession.value);
+            if (!sessionData || !sessionData.role) {
+                throw new Error("Invalid session structure");
+            }
+        } catch (e) {
+            // Invalid session format, force re-login
+            const response = NextResponse.redirect(new URL("/admin/login", request.url));
+            response.cookies.delete("admin_session");
+            return response;
+        }
     }
 
     return NextResponse.next();
+}
+
+return NextResponse.next();
 }
 
 export const config = {
