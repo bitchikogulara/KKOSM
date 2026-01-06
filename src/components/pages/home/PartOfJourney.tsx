@@ -1,6 +1,8 @@
 import Button from "@/components/ui/button";
 import Image from "next/image";
 
+import Link from "next/link";
+
 const PartOfJourney = () => {
   return (
     <section className="w-full pb-20 lg:pb-35">
@@ -37,7 +39,9 @@ const PartOfJourney = () => {
             <p className="text-xl md:text-[30px] text-yellow-light mb-8 md:mb-11">
               Take the first step into adventure and leadership.
             </p>
-            <Button className="">Continue to register</Button>
+            <Link href="/registration">
+              <Button className="">Continue to register</Button>
+            </Link>
           </div>
         </div>
       </div>
