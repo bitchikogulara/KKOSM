@@ -25,4 +25,5 @@ export interface EventCardProps {
   sections: EventSection[];
   showTimeline?: boolean;
   timelineTitle?: string;
+  image?: string;
 }
