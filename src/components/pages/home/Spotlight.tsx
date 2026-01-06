@@ -2,8 +2,27 @@
 import Button from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
-
+import React from "react";
+import Link from "next/link";
 const Spotlight = () => {
+  const [images, setImages] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    fetch("/api/media?type=image&limit=6")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          // data is array of MediaItem {id, url, ...}
+          const urls = data.map((item: any) => item.url);
+          if (urls.length > 0) setImages(urls);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  // Use defaults if nothing from API yet (to prevent empty section)
+  const displayImages = images.length > 0 ? images : defaultImages;
+
   return (
     <section className="w-full bg-yellow-lighter pt-6 md:pt-8 pb-12 md:pb-17.5 overflow-hidden">
       <div className="container-box">
@@ -11,11 +30,13 @@ const Spotlight = () => {
           <h6 className="text-2xl md:text-4xl font-semibold text-yellow-darkest">
             Into the Spotlight
           </h6>
-          <Button variant="outline">Explore more</Button>
+          <Link href="/news-and-media#media-gallery">
+            <Button variant="outline">Explore more</Button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:hidden max-w-[420px] mx-auto">
-          {images.map((src, index) => (
+          {displayImages.map((src, index) => (
             <SpotlightImage
               key={index}
               src={src}
@@ -31,42 +52,42 @@ const Spotlight = () => {
 
         <div className="hidden md:grid md:grid-cols-3 md:gap-6">
           <div className="flex flex-col gap-6">
-            <SpotlightImage
-              src={images[0]}
+            {displayImages[0] && <SpotlightImage
+              src={displayImages[0]}
               index={0}
               className="h-[248px] rounded-[30px]"
-            />
-            <SpotlightImage
-              src={images[3]}
+            />}
+            {displayImages[3] && <SpotlightImage
+              src={displayImages[3]}
               index={3}
               className="h-[376px] rounded-[30px]"
-            />
+            />}
           </div>
           {/* Column 2 */}
           <div className="flex flex-col gap-6">
-            <SpotlightImage
-              src={images[1]}
+            {displayImages[1] && <SpotlightImage
+              src={displayImages[1]}
               index={1}
               className="h-[376px] rounded-[30px]"
-            />
-            <SpotlightImage
-              src={images[4]}
+            />}
+            {displayImages[4] && <SpotlightImage
+              src={displayImages[4]}
               index={4}
               className="h-[248px] rounded-[30px]"
-            />
+            />}
           </div>
           {/* Column 3 */}
           <div className="flex flex-col gap-6">
-            <SpotlightImage
-              src={images[2]}
+            {displayImages[2] && <SpotlightImage
+              src={displayImages[2]}
               index={2}
               className="h-[248px] rounded-[30px]"
-            />
-            <SpotlightImage
-              src={images[5]}
+            />}
+            {displayImages[5] && <SpotlightImage
+              src={displayImages[5]}
               index={5}
               className="h-[376px] rounded-[30px]"
-            />
+            />}
           </div>
         </div>
       </div>
@@ -74,7 +95,7 @@ const Spotlight = () => {
   );
 };
 
-const images = [
+const defaultImages = [
   "/images/homepage/spotlightSection/image1.webp",
   "/images/homepage/spotlightSection/image2.webp",
   "/images/homepage/spotlightSection/image3.webp",

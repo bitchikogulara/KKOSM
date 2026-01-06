@@ -4,56 +4,35 @@ import React from "react";
 import { motion } from "motion/react";
 import Arrow from "@/components/icons/Arrow";
 
-const newsData = [
-  {
-    id: 1,
-    title: "Scouts Clean Local Park",
-    description:
-      "Our team gathered to restore nature and keep our community green.",
-    image: "/images/homepage/news&media/image1.webp",
-    large: true,
-  },
-  {
-    id: 2,
-    title: "Summer Camp 2025 Opens",
-    description:
-      "Registrations are now live — join us for adventure and friendship.",
-    image: "/images/homepage/news&media/image2.webp",
-    large: false,
-  },
-  {
-    id: 3,
-    title: "Leadership Workshop Held",
-    description:
-      "Young scouts learned skills in teamwork, responsibility, and service.",
-    image: "/images/homepage/news&media/image3.webp",
-    large: false,
-  },
-];
+
 
 const NewsCard = ({
   data,
   className,
+  variant = "small",
+  index = 0,
 }: {
-  data: (typeof newsData)[0];
+  data: { id: number; title: string; description: string; image: string; large?: boolean };
   className?: string;
+  variant?: "large" | "small";
+  index?: number;
 }) => {
+  const isLarge = variant === "large";
+
   return (
     <motion.div
-      className={`relative shadow-md border overflow-hidden rounded-[30px] flex flex-col ${
-        data.id === 1
-          ? "bg-[#F3F4F6]/80 border-[#CCCED3]"
-          : data.id === 2
+      className={`relative shadow-md border overflow-hidden rounded-[30px] flex flex-col ${index === 0
+        ? "bg-[#F3F4F6]/80 border-[#CCCED3]"
+        : index === 1
           ? "bg-[#FFF4E5]/60 border-[#E5D5BF]"
           : "bg-[#E8F8F0] border-[#B1D8C5]"
-      }  group cursor-pointer ${className}`}
+        }  group cursor-pointer ${className}`}
       initial="initial"
       whileHover="hover"
     >
       <div
-        className={`relative overflow-hidden w-full shrink-0 ${
-          data.large ? "h-[65%] md:h-[75%]" : "h-[60%] md:h-[50%]"
-        }`}
+        className={`relative overflow-hidden w-full shrink-0 ${isLarge ? "h-[500px]" : "h-[160px]"
+          }`}
       >
         <motion.div
           className="w-full h-full"
@@ -111,7 +90,7 @@ const NewsCard = ({
         </div>
       </div>
 
-      <div className="px-4 py-4 pb-5 flex flex-col justify-center flex-1">
+      <div className={`px-4 py-4 pb-5 flex flex-col justify-center ${isLarge ? "h-[170px]" : "h-[160px]"}`}>
         <h6 className="text-xl md:text-2xl font-medium text-yellow-darkest-active mb-3">
           {data.title}
         </h6>
@@ -124,6 +103,24 @@ const NewsCard = ({
 };
 
 const NewsAndMedia = () => {
+  const [newsData, setNewsData] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetch("/api/news")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          // Map DB fields to component fields if necessary or ensure API returns correct shape
+          // Our API returns title, description, image, large (boolean).
+          // Component expects id, title, description, image, large.
+          setNewsData(data);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  if (newsData.length === 0) return null; // or loading
+
   return (
     <section className="bg-white w-full h-full pb-20 lg:pb-35">
       <div className="container-box">
@@ -135,11 +132,11 @@ const NewsAndMedia = () => {
         </h6>
 
         <div className="grid grid-cols-1 md:max-w-2xl md:mx-auto lg:max-w-none lg:mx-0 lg:grid-cols-2 gap-8 h-auto">
-          <NewsCard data={newsData[0]} className="h-full min-h-[400px]" />
+          {newsData[0] && <NewsCard data={newsData[0]} variant="large" className="h-full" index={0} />}
 
           <div className="flex flex-col gap-8 h-full">
-            <NewsCard data={newsData[1]} className="flex-1 min-h-[280px]" />
-            <NewsCard data={newsData[2]} className="flex-1 min-h-[280px]" />
+            {newsData[1] && <NewsCard data={newsData[1]} variant="small" className="flex-1" index={1} />}
+            {newsData[2] && <NewsCard data={newsData[2]} variant="small" className="flex-1" index={2} />}
           </div>
         </div>
       </div>
