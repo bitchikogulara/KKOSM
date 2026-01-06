@@ -86,5 +86,7 @@ model AdminUser {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String   // Hashed password
+  name      String?
+  role      String   @default("MODERATOR") // "ADMIN" or "MODERATOR"
   createdAt DateTime @default(now())
 }

@@ -25,11 +25,17 @@ export async function POST(request: Request) {
             const count = await prisma.adminUser.count();
             if (count === 0) {
                 const hashedPassword = await bcrypt.hash(password, 10);
-                await prisma.adminUser.create({
-                    data: { email, password: hashedPassword },
+                const newAdmin = await prisma.adminUser.create({
+                    data: {
+                        email,
+                        password: hashedPassword,
+                        role: "ADMIN",
+                        name: "Super Admin"
+                    },
                 });
                 // Login successful after creation
-                (await cookies()).set("admin_session", "true", { httpOnly: true, path: "/" });
+                const sessionData = JSON.stringify({ id: newAdmin.id, role: newAdmin.role, name: newAdmin.name });
+                (await cookies()).set("admin_session", sessionData, { httpOnly: true, path: "/" });
                 return NextResponse.json({ message: "Admin created and logged in" });
             }
 
@@ -47,8 +53,9 @@ export async function POST(request: Request) {
             );
         }
 
-        // Set simple session cookie
-        (await cookies()).set("admin_session", "true", { httpOnly: true, path: "/" });
+        // Set session cookie with user info
+        const sessionData = JSON.stringify({ id: admin.id, role: admin.role, name: admin.name });
+        (await cookies()).set("admin_session", sessionData, { httpOnly: true, path: "/" });
 
         return NextResponse.json({ message: "Login successful" });
     } catch (error) {
