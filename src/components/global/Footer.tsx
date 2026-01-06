@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import YoutubeIcon from "../icons/YoutubeIcon";
 import InstagramIcon from "../icons/InstagramIcon";
 import FacebookIcon from "../icons/FacebookIcon";
 import TikTokIcon from "../icons/TikTokIcon";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
   return (
     <footer className="bg-[#304F50] text-white pt-16 pb-8">
       <div className="container-box">

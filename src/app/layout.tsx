@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} antialiased`}>
+      <body className={`${outfit.variable} antialiased`} suppressHydrationWarning>
         <Header />
         <main>{children}</main>
         <Footer />

@@ -86,13 +86,14 @@ const Header = () => {
   };
 
   const isStyledPage = path === "/contact-us" || path === "/registration";
+  const isAdmin = path?.startsWith("/admin");
 
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className={`w-full z-100 ${isStyledPage
+      className={`w-full z-100 ${isStyledPage || isAdmin
         ? "sticky top-0 bg-[#304F50] py-3 shadow-md"
         : `fixed top-0 left-0 bg-transparent ${isScrolled
           ? "bg-white/80 backdrop-blur-md shadow-sm py-3 "
@@ -107,14 +108,14 @@ const Header = () => {
           href="/"
           className="relative flex items-center gap-3 cursor-pointer z-101"
         >
-          {path === "/about-us" || isStyledPage ? (
+          {path === "/about-us" || isStyledPage || isAdmin ? (
             <>
               <Image
-                src={"/logo/logo-no-bg.svg"}
+                src={"/logo/logo-about-us.svg"}
                 alt="KKOSM Logo"
-                width={53}
-                height={53}
-                className="h-auto w-[53px]"
+                width={118}
+                height={55}
+                className="h-auto w-[118px]"
               />
               <span
                 className={`text-xl font-bold tracking-wide ${isStyledPage
@@ -124,7 +125,6 @@ const Header = () => {
                     : "text-white"
                   }`}
               >
-                KKOSM
               </span>
             </>
           ) : (
@@ -144,7 +144,7 @@ const Header = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`text-xs sm:text-sm xl:text-base font-medium hover:text-yellow-dark cursor-pointer transition-colors ${isStyledPage
+                  className={`text-xs sm:text-sm xl:text-base font-medium hover:text-yellow-dark cursor-pointer transition-colors ${isStyledPage || isAdmin
                     ? "text-white hover:text-yellow-lighter"
                     : path === "/events"
                       ? isScrolled

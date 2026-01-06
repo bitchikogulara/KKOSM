@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import Button from "../../ui/button";
 import { motion } from "motion/react";
@@ -112,7 +113,9 @@ const Hero = () => {
               initial="hidden"
               animate="visible"
             >
-              <Button>Join the journey</Button>
+              <Link href="/registration">
+                <Button>Join the journey</Button>
+              </Link>
             </motion.div>
           </div>
         </div>

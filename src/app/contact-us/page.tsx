@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,7 +29,34 @@ export default function ContactUsPage() {
                     </p>
                 </div>
 
-                <form className="space-y-6">
+                <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    // Simple form data gathering - in real app use controlled inputs or FormData
+                    const formData = new FormData(e.currentTarget);
+                    const data = {
+                        firstName: formData.get("firstName"),
+                        lastName: formData.get("lastName"),
+                        email: formData.get("email"),
+                        phone: formData.get("phone"),
+                        message: formData.get("message"),
+                    };
+
+                    try {
+                        const res = await fetch("/api/contact", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data),
+                        });
+                        if (res.ok) {
+                            alert("Message sent successfully!");
+                            (e.target as HTMLFormElement).reset();
+                        } else {
+                            alert("Failed to send message.");
+                        }
+                    } catch (err) {
+                        alert("Error sending message.");
+                    }
+                }} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label htmlFor="firstName" className="block text-lg font-bold text-[#828282]">
@@ -36,8 +64,10 @@ export default function ContactUsPage() {
                             </label>
                             <Input
                                 id="firstName"
+                                name="firstName"
                                 placeholder="გთხოვთ შეიყვანოთ სახელი"
                                 className="h-[50px] text-base"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -46,8 +76,10 @@ export default function ContactUsPage() {
                             </label>
                             <Input
                                 id="lastName"
+                                name="lastName"
                                 placeholder="გთხოვთ შეიყვანოთ გვარი"
                                 className="h-[50px] text-base"
+                                required
                             />
                         </div>
                     </div>
@@ -59,9 +91,11 @@ export default function ContactUsPage() {
                             </label>
                             <Input
                                 id="email"
+                                name="email"
                                 type="email"
                                 placeholder="გთხოვთ შეიყვანოთ მეილი"
                                 className="h-[50px] text-base"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -70,6 +104,7 @@ export default function ContactUsPage() {
                             </label>
                             <Input
                                 id="phone"
+                                name="phone"
                                 type="tel"
                                 placeholder="გთხოვთ შეიყვანოთ ტელ. ნომერი"
                                 className="h-[50px] text-base"
@@ -83,8 +118,10 @@ export default function ContactUsPage() {
                         </label>
                         <Textarea
                             id="message"
+                            name="message"
                             placeholder="რისი თქმა გსურთ..."
                             className="min-h-[150px] text-base resize-none"
+                            required
                         />
                     </div>
 

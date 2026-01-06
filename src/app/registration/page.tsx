@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,7 +37,38 @@ export default function RegistrationPage() {
                     </p>
                 </div>
 
-                <form className="space-y-6">
+                <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+
+                    const data = {
+                        firstName: formData.get("firstName"),
+                        lastName: formData.get("lastName"),
+                        email: formData.get("email"),
+                        phone: formData.get("phone"),
+                        dobDay: formData.get("dobDay"),
+                        dobMonth: formData.get("dobMonth"),
+                        dobYear: formData.get("dobYear"),
+                        source: formData.get("source"),
+                        motivation: formData.get("motivation"),
+                    };
+
+                    try {
+                        const res = await fetch("/api/registration", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data),
+                        });
+                        if (res.ok) {
+                            alert("Registration submitted successfully!");
+                            (e.target as HTMLFormElement).reset();
+                        } else {
+                            alert("Failed to submit registration.");
+                        }
+                    } catch (err) {
+                        alert("Error submitting registration.");
+                    }
+                }} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label htmlFor="firstName" className="block text-lg font-bold text-[#828282]">
@@ -44,8 +76,10 @@ export default function RegistrationPage() {
                             </label>
                             <Input
                                 id="firstName"
+                                name="firstName"
                                 placeholder="გთხოვთ შეიყვანოთ სახელი"
                                 className="h-[50px] text-base"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -54,8 +88,10 @@ export default function RegistrationPage() {
                             </label>
                             <Input
                                 id="lastName"
+                                name="lastName"
                                 placeholder="გთხოვთ შეიყვანოთ გვარი"
                                 className="h-[50px] text-base"
+                                required
                             />
                         </div>
                     </div>
@@ -66,9 +102,11 @@ export default function RegistrationPage() {
                         </label>
                         <Input
                             id="email"
+                            name="email"
                             type="email"
                             placeholder="გთხოვთ შეიყვანოთ მეილი"
                             className="h-[50px] text-base"
+                            required
                         />
                     </div>
 
@@ -78,9 +116,11 @@ export default function RegistrationPage() {
                         </label>
                         <Input
                             id="phone"
+                            name="phone"
                             type="tel"
                             placeholder="გთხოვთ შეიყვანოთ ტელ. ნომერი"
                             className="h-[50px] text-base"
+                            required
                         />
                     </div>
 
@@ -93,6 +133,7 @@ export default function RegistrationPage() {
                             {/* Day */}
                             <div className="relative">
                                 <select
+                                    name="dobDay"
                                     className="w-full h-[50px] rounded-[4px] border border-[#E0E0E0] bg-white px-3 py-2 text-base text-[#828282] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-dark focus-visible:ring-offset-2 appearance-none cursor-pointer"
                                     defaultValue=""
                                 >
@@ -111,6 +152,7 @@ export default function RegistrationPage() {
                             {/* Month */}
                             <div className="relative">
                                 <select
+                                    name="dobMonth"
                                     className="w-full h-[50px] rounded-[4px] border border-[#E0E0E0] bg-white px-3 py-2 text-base text-[#828282] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-dark focus-visible:ring-offset-2 appearance-none cursor-pointer"
                                     defaultValue=""
                                 >
@@ -129,6 +171,7 @@ export default function RegistrationPage() {
                             {/* Year */}
                             <div className="relative">
                                 <select
+                                    name="dobYear"
                                     className="w-full h-[50px] rounded-[4px] border border-[#E0E0E0] bg-white px-3 py-2 text-base text-[#828282] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-dark focus-visible:ring-offset-2 appearance-none cursor-pointer"
                                     defaultValue=""
                                 >
@@ -152,6 +195,7 @@ export default function RegistrationPage() {
                         </label>
                         <Input
                             id="source"
+                            name="source"
                             placeholder="როგორ აღმოგვაჩინე..."
                             className="h-[50px] text-base"
                         />
@@ -163,6 +207,7 @@ export default function RegistrationPage() {
                         </label>
                         <Textarea
                             id="motivation"
+                            name="motivation"
                             placeholder="რისი თქმა გსურთ..."
                             className="min-h-[150px] text-base resize-none"
                         />
