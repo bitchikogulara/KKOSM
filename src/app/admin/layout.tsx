@@ -43,7 +43,7 @@ export default function AdminLayout({
                     </button>
                 </div>
 
-                <nav className="flex-1 p-3 space-y-1">
+                <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
                     <NavLink
                         href="/admin"
                         active={pathname === "/admin"}
