@@ -95,7 +95,7 @@ export default function AdminLayout({
 
                     <button
                         onClick={handleLogout}
-                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-red-50 text-red-600 hover:bg-red-100 w-full text-left mt-auto border border-red-200 ${collapsed ? "justify-center" : ""}`}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-red-50 text-red-600 hover:bg-red-100 w-full text-left mt-auto mb-4 border border-red-200 ${collapsed ? "justify-center" : ""}`}
                         title={collapsed ? "Logout" : ""}
                     >
                         <span className="shrink-0">
