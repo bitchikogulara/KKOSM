@@ -23,4 +23,6 @@ export interface EventCardProps {
   specialDescription: string;
   timeline: TimelineItem[];
   sections: EventSection[];
+  showTimeline?: boolean;
+  timelineTitle?: string;
 }
