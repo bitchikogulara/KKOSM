@@ -59,7 +59,7 @@ export default function NewNewsPage() {
                     <label className="text-sm font-medium">Image</label>
                     <ImageUpload
                         value={formData.image}
-                        onChange={(url: string) => setFormData({ ...formData, image: url })}
+                        onChange={(url: string) => setFormData(prev => ({ ...prev, image: url }))}
                         disabled={loading}
                     />
                 </div>
