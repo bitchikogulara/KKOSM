@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id               Int      @id @default(autoincrement())
+  tag              String
+  date             String
+  title            String
+  description      String   @db.Text
+  location         String
+  age              String
+  price            String
+  image            String
+  // Storing rich details as separate fields or JSON if complex relations needed later
+  // For now keeping it simple as per "simple backend" request, 
+  // relying on client to parse structure or just storing flat fields.
+  theme            String?
+  category         String?
+  specialDescription String? @db.Text
+  
+  // JSON fields for structured data like timeline/sections if supported by Database,
+  // otherwise might need relation tables. Neon/Postgres supports JSONB.
+  timeline         Json?    
+  sections         Json?    
+
+  showTimeline     Boolean  @default(true)
+  timelineTitle    String   @default("Schedule")
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model NewsArticle {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  image       String
+  large       Boolean  @default(false)
+  
+  content     String?  @db.Text // Full article content if needed beyond description
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MediaItem {
+  id        Int      @id @default(autoincrement())
+  url       String
+  type      String   @default("image") // "image" or "video"
+  title     String?
+  createdAt DateTime @default(now())
+}
+
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model ScoutRegistration {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  dobDay      Int?
+  dobMonth    Int?
+  dobYear     Int?
+  source      String?
+  motivation  String?  @db.Text
+  createdAt   DateTime @default(now())
+}
+
+// Simple Admin User table for basic auth
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // Hashed password
+  createdAt DateTime @default(now())
+}
